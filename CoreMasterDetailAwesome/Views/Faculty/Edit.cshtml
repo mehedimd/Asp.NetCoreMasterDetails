@@ -1,0 +1,102 @@
+﻿@model CoreMasterDetailAwesome.Models.Faculty
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4 class="text-center text-primary">Faculty Part</h4>
+<hr />
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <input type="hidden" asp-for="FacultyID"/>
+            <input type="hidden" asp-for="PicPath"/>
+
+            <div class="row g-3">
+                <div class="form-group col-md-6">
+                    <label asp-for="FacultyName" class="control-label">Faculty Name:</label>
+                    <input asp-for="FacultyName" class="form-control" />
+                    <span asp-validation-for="FacultyName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="CourseName" class="control-label">Course:</label>
+                    <input asp-for="CourseName" class="form-control" />
+                    <span asp-validation-for="CourseName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="CourseStartDate" class="control-label">Course Start Date:</label>
+                    <input asp-for="CourseStartDate" class="form-control" />
+                    <span asp-validation-for="CourseStartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Photo:</label>
+                    <input type="file" name="Picture" accept="/image*" class="form-control" />
+
+                </div>
+                <div class="col-md-12 text-end mt-3">
+                    <h4 class="text-center text-secondary"> Student Part</h4>
+                    <hr />
+                    <input value="Add Student" type="button" class="btn btn-primary" id="addBtn" />
+                </div>
+                <table class="table col-md-12 text-center mt-3 table-borderless">
+                    <thead>
+                    </thead>
+
+                    <tbody id="studentTable">
+                        @for (int i = 0; i < Model.Students.Count; i++)
+                        {
+                            <tr>
+                                <td><input type="text" id="name_@i" class="form-control" asp-for="Students[i].StudentName" required placeholder="Student Name.." /></td>
+                                <td><input type="text" id="address_@i" class="form-control" asp-for="Students[i].Address" required placeholder="Student Address.." /></td>
+                                <td><input id="isDeleted_@i" type="hidden" asp-for="Students[i].IsDeleted" /></td>
+                                <td><input class="btn btn-danger" type="button" onclick="Remove(this)" value="Remove" id="@i" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a class="btn btn-success" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $("#addBtn").click(() => {
+            createNewRow()
+        })
+        function createNewRow() {
+            let index = $("#studentTable").children('tr').length;
+
+            let tr = `<tr> <td><input type="text" id="name_${index}" class="form-control" name="Students[${index}].StudentName" required placeholder="Student Name.."/></td>
+                                    <td><input type="text" id="address_${index}" class="form-control" name="Students[${index}].Address" required placeholder="Student Address.."/></td>
+                                    <td><input id="isDeleted_${index}" type="hidden" name="Students[${index}].IsDeleted" /></td>
+                            <td><input class="btn btn-danger" type="button" onclick="Remove(this)" value="Remove" id="${index}" /></td>
+                                                 </tr>`
+
+            $("#studentTable").append(tr);
+        }
+        function Remove(btn) {
+
+            // btn.closest("tr").remove();
+            let btnId = btn.id;
+            let isDeleteId = "isDeleted_" + btnId;
+            document.getElementById(isDeleteId).value = 'true';
+            $(btn).closest("tr").hide();
+        }
+    </script>
+}
+

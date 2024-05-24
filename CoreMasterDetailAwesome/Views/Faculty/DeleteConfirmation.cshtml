@@ -1,0 +1,60 @@
+﻿@model CoreMasterDetailAwesome.Models.Faculty
+
+@{
+    ViewData["Title"] = "DeleteConfirmation";
+}
+
+<h4 class="text-danger">Are you sure you want to delete this?</h4>
+<div>
+    <h5 class="text-primary">Faculty</h5>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Faculty
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FacultyName)
+        </dd>
+        <dt class = "col-sm-2">
+           Course
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CourseName)
+        </dd>
+        <dt class = "col-sm-2">
+            Start Date
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CourseStartDate)
+        </dd>
+        <dt class = "col-sm-2">
+            Photo
+        </dt>
+        <dd class = "col-sm-10">
+            @* @Html.DisplayFor(model => model.PicPath) *@
+            <img src="~/Images/@Model.PicPath" class="img-thumbnail" width="90"/>
+        </dd>
+    </dl>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <td>StudentName</td>
+                    <td>Address</td>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Students.Count; i++)
+                {
+                    <tr>
+                        <td>@Model.Students[i].StudentName</td>
+                        <td>@Model.Students[i].Address</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.FacultyID"> Delete</a>
+    <a class="btn btn-success" asp-action="Index">Back to List</a>
+
+</div>

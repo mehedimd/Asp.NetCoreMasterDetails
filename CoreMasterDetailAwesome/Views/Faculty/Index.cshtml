@@ -1,0 +1,80 @@
+﻿@model IEnumerable<CoreMasterDetailAwesome.Models.Faculty>
+
+@{
+    ViewData["Title"] = "Faculty";
+}
+
+<h3 class="text-center text-primary">Faculty List</h3>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary btn-md">Create New</a>
+</p>
+<table class="table table-bordered table-striped text-center align-middle">
+    <thead>
+        <tr>
+            <th>
+                Faculty
+            </th>
+            <th>
+                Course
+            </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+                Photo
+            </th>
+            <th>--Action--</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FacultyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseStartDate)
+                </td>
+                <td>
+                    @if (item.PicPath != null)
+                    {
+                        <img src="~/Images/@item.PicPath" class="img-fluid" width="60" />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-success btn-sm" asp-route-id="@item.FacultyID">Edit</a>
+                    <a asp-action="Details" class="btn btn-info btn-sm ms-2" asp-route-id="@item.FacultyID">Details</a>
+                    <a asp-action="DeleteConfirmation" class="btn btn-danger btn-sm ms-2" asp-route-id="@item.FacultyID">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" class="ps-5 pe-5">
+                    <table class="table table-bordered p-5">
+                        <thead class="bg-primary text-light">
+                            <tr>
+                                <td>ID</td>
+                                <td>StudentName</td>
+                                <td>Address</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var std in item.Students)
+                            {
+                                <tr>
+                                    <td>@std.StudentID</td>
+                                    <td>@std.StudentName</td>
+                                    <td>@std.Address</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
