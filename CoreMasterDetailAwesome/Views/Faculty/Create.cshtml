@@ -38,12 +38,12 @@
                     <hr />
                     <input value="Add Student" type="button" class="btn btn-primary" id="addBtn" />
                 </div>
-                    <table class="table col-md-12 text-center mt-3 table-borderless">
-                        <thead>
-                        </thead>
-                        <tbody id="studentTable">
-                        </tbody>
-                    </table>
+                <table class="table col-md-12 text-center mt-3 table-borderless">
+                    <thead>
+                    </thead>
+                    <tbody id="studentTable">
+                    </tbody>
+                </table>
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
@@ -57,7 +57,9 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         $("#addBtn").click(() => {
             createNewRow()
@@ -66,15 +68,15 @@
             let index = $("#studentTable").children('tr').length;
 
             let tr = `<tr> <td><input type="text" id="name_${index}" class="form-control" name="Students[${index}].StudentName" required placeholder="Student Name.."/></td>
-                            <td><input type="text" id="address_${index}" class="form-control" name="Students[${index}].Address" required placeholder="Student Address.."/></td>
-                            <td><input id="isDeleted_${index}" type="hidden" name="Students[${index}].IsDeleted" /></td>
-                    <td><input class="btn btn-danger" type="button" onclick="Remove(this)" value="Remove" id="${index}" /></td>
-                                         </tr>`
+                                    <td><input type="text" id="address_${index}" class="form-control" name="Students[${index}].Address" required placeholder="Student Address.."/></td>
+                                    <td><input id="isDeleted_${index}" type="hidden" name="Students[${index}].IsDeleted" /></td>
+                            <td><input class="btn btn-danger" type="button" onclick="Remove(this)" value="Remove" id="${index}" /></td>
+                                                 </tr>`
 
             $("#studentTable").append(tr);
         }
         function Remove(btn) {
-            
+
             // btn.closest("tr").remove();
             let btnId = btn.id;
             let isDeleteId = "isDeleted_" + btnId;
