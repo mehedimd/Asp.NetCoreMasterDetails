@@ -20,7 +20,8 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label asp-for="CourseName" class="control-label">Course:</label>
-                    <input asp-for="CourseName" class="form-control" />
+                    @* <input asp-for="CourseName" class="form-control" /> *@
+                    <select asp-for="CourseName" class="form-select" asp-items="ViewBag.courses"></select>
                     <span asp-validation-for="CourseName" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-6">
@@ -80,6 +81,7 @@
             // btn.closest("tr").remove();
             let btnId = btn.id;
             let isDeleteId = "isDeleted_" + btnId;
+            console.log(document.getElementById(isDeleteId));
             document.getElementById(isDeleteId).value = 'true';
             $(btn).closest("tr").hide();
         }

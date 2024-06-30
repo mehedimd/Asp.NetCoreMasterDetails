@@ -1,5 +1,6 @@
 ﻿using CoreMasterDetailAwesome.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreMasterDetailAwesome.Controllers
@@ -22,6 +23,13 @@ namespace CoreMasterDetailAwesome.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            List<SelectListItem> course = new List<SelectListItem>()
+            {
+                new SelectListItem(){Value = "Asp.Net", Text = "Asp.Net"},
+                new SelectListItem(){Value = "C#", Text = "C#"}
+
+            };
+            ViewBag.courses = course;
             return View();
         }
         [HttpPost]
@@ -70,6 +78,13 @@ namespace CoreMasterDetailAwesome.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            List<SelectListItem> course = new List<SelectListItem>()
+            {
+                new SelectListItem(){Value = "Asp.Net", Text = "Asp.Net"},
+                new SelectListItem(){Value = "C#", Text = "C#"}
+
+            };
+            ViewBag.courses = course;
             var faculty = context.Faculties.Include(p=>p.Students).Where(f=>f.FacultyID == id).FirstOrDefault();
 
             return View(faculty);
